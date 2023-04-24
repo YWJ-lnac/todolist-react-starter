@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-
+import styled from 'styled-components'
+import clsx from 'clsx'
 const StyledAddTodoContainer = styled.div`
   min-height: 52px;
   display: flex;
@@ -14,7 +14,7 @@ const StyledAddTodoContainer = styled.div`
   &.active {
     box-shadow: 0 17px 0 -16px var(--major);
   }
-`;
+`
 
 const StyledLabelIcon = styled.label`
   display: inline-flex;
@@ -25,7 +25,7 @@ const StyledLabelIcon = styled.label`
   &:after {
     content: '+';
   }
-`;
+`
 
 const StyledInputContainer = styled.div`
   min-height: 52px;
@@ -51,7 +51,7 @@ const StyledInputContainer = styled.div`
       color: var(--gray);
     }
   }
-`;
+`
 
 const StyledAddTodoActionContainer = styled.div`
   button {
@@ -66,19 +66,39 @@ const StyledAddTodoActionContainer = styled.div`
       display: block;
     }
   }
-`;
-const TodoInput = () => {
+`
+const TodoInput = ({ inputValue, onChange, onKeyPress, onAddTodo }) => {
   return (
-    <StyledAddTodoContainer>
-      <StyledLabelIcon className="icon" htmlFor="add-todo-input" />
+    <StyledAddTodoContainer
+      className={clsx('', { active: inputValue.length > 0 })}
+    >
+      <StyledLabelIcon className='icon' htmlFor='add-todo-input' />
       <StyledInputContainer>
-        <input id="add-todo-input" type="text" placeholder="新增工作" />
+        <input
+          id='add-todo-input'
+          type='text'
+          placeholder='新增工作'
+          value={inputValue}
+          onChange={(e) => {
+            onChange?.(e.target.value)
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onKeyPress?.()
+            }
+          }}
+        />
       </StyledInputContainer>
-      <StyledAddTodoActionContainer>
-        <button className="btn-reset">新增</button>
+      <StyledAddTodoActionContainer
+        className={clsx('', { active: inputValue.length > 0 })}
+      >
+        <button className='btn-reset' onClick={() => onAddTodo?.()}>
+          {/* <button className="btn-reset" onClick={onAddTodo}> */}
+          新增
+        </button>
       </StyledAddTodoActionContainer>
     </StyledAddTodoContainer>
-  );
-};
+  )
+}
 
-export default TodoInput;
+export default TodoInput

@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 import {
   CheckActiveIcon,
   CheckCircleIcon,
-  CheckHoverIcon,
-} from 'assets/images';
+  CheckHoverIcon
+} from 'assets/images'
+import clsx from 'clsx'
+import { useRef } from 'react'
 
 const StyledTaskItem = styled.div`
   min-height: 52px;
@@ -98,23 +100,51 @@ const StyledTaskItem = styled.div`
       background-image: url(${CheckHoverIcon});
     }
   }
-`;
+`
 
-const TodoItem = () => {
+const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
+  const inputRef = useRef(null)
+  function handleKeyDown (event) {
+    if (inputRef.current.value.length > 0 && event.key === 'Enter') {
+      onSave?.({ id: todo.id, title: inputRef.current.value })
+    }
+    if (event.key === 'Escape') {
+      onChangeMode?.({ id: todo.id, isEdit: false })
+    }
+  }
   return (
-    <StyledTaskItem>
-      <div className="task-item-checked">
-        <span className="icon icon-checked" />
+    <StyledTaskItem
+      className={clsx('', { done: todo.isDone, edit: todo.isEdit })}
+    >
+      <div className='task-item-checked'>
+        <span
+          className='icon icon-checked'
+          onClick={() => {
+            onToggleDone?.(todo.id)
+          }}
+        />
       </div>
-      <div className="task-item-body">
-        <span className="task-item-body-text">todo</span>
-        <input className="task-item-body-input" />
+      <div
+        className='task-item-body'
+        onDoubleClick={() => onChangeMode?.({ id: todo.id, isEdit: true })}
+      >
+        <span className='task-item-body-text'>{todo.title}</span>
+        <input
+          ref={inputRef}
+          className='task-item-body-input'
+          // value={todo.title}
+          defaultValue={todo.title}
+          onKeyDown={handleKeyDown}
+        />
       </div>
-      <div className="task-item-action ">
-        <button className="btn-reset btn-destroy icon"></button>
+      <div className='task-item-action '>
+        <button
+          className='btn-reset btn-destroy icon'
+          onClick={() => onDelete?.(todo.id)}
+        />
       </div>
     </StyledTaskItem>
-  );
-};
+  )
+}
 
-export default TodoItem;
+export default TodoItem

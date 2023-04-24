@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -10,7 +10,7 @@ const StyledFooter = styled.footer`
     font-weight: 300;
     margin: 2rem 0 1rem;
   }
-`;
+`
 
 const StyledButton = styled.button`
   padding: 0;
@@ -29,15 +29,15 @@ const StyledButton = styled.button`
   &:hover {
     text-decoration: underline;
   }
-`;
+`
 
-const Footer = () => {
+const Footer = ({ todos }) => {
   return (
     <StyledFooter>
-      <p>剩餘項目數： 0</p>
+      <p>剩餘項目數： {todos.length}</p>
       <StyledButton>登出</StyledButton>
     </StyledFooter>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

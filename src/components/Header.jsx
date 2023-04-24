@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyledHeader = styled.header`
   display: flex;
@@ -12,24 +12,24 @@ const StyledHeader = styled.header`
     font-weight: 400;
     user-select: none;
   }
-`;
+`
 
 const StyledGreetingText = styled.div`
   color: var(--gray);
   span {
     color: var(--major);
   }
-`;
+`
 
-const Header = () => {
+const Header = ({ username }) => {
   return (
     <StyledHeader>
       <h3>Tasks</h3>
       <StyledGreetingText>
-        Hi <span>user</span>
+        Hi <span>{username}</span>
       </StyledGreetingText>
     </StyledHeader>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
