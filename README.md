@@ -1,6 +1,6 @@
 # ✨Todo List - React
 
-![](public/screenshot-01.jpg)
+![](public/screenshot-01.JPG)
 
 ## 👋 Welcome
 
